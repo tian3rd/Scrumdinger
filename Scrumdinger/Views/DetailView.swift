@@ -11,7 +11,31 @@ struct DetailView: View {
     let scrum: DailyScrum
     
     var body: some View {
-        Text(scrum.title)
+        List{
+            Section(header: Text("Meeting Info")) {
+                Label("Start Meeting", systemImage: "timer")
+                    .font(.headline)
+                    .foregroundColor(.accentColor)
+                HStack {
+                    Label("Length", systemImage: "clock")
+                    Spacer()
+                    Text("\(scrum.lengthInMinutes) mins")
+                }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Length of meeting")
+                .accessibilityValue("\(scrum.lengthInMinutes) minutes")
+                HStack {
+                    Label("Theme", systemImage: "paintpalette")
+                    Spacer()
+                    Text(scrum.theme.name)
+                        .padding(4)
+                        .foregroundColor(scrum.theme.accentColor)
+                        .background(scrum.theme.mainColor)
+                        .cornerRadius(8)
+                }
+                .accessibilityElement(children: .combine)
+            }
+        }
     }
 }
 
